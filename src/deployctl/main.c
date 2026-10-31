@@ -63,7 +63,7 @@ static void format_duration(long seconds, char *out, size_t size) {
 // One deployment as a table row: when, id, change, result, how long, why.
 static void print_deployment(const char *json) {
     long id = 0, started = 0, duration = 0;
-    char from[40] = "", to[40] = "", phase[20] = "", reason[256] = "", change[90], took[16], when[20];
+    char from[40] = "", to[40] = "", phase[20] = "", reason[256] = "", change[90], took[48], when[20];
     json_get_int(json, "id", &id);
     json_get_int(json, "started", &started);
     json_get_int(json, "duration", &duration);
@@ -98,7 +98,7 @@ static int show_status(void) {
     while (json_next_object(&cursor, item, sizeof item)) {
         long port_no = 0, pid = 0, requests = 0, errors = 0, restarts = 0, uptime = 0;
         int canary = 0;
-        char version[40] = "", state[16] = "", error_pct[16], up[16];
+        char version[40] = "", state[16] = "", error_pct[16], up[48];
         json_get_int(item, "port", &port_no);
         json_get_int(item, "pid", &pid);
         json_get_int(item, "requests", &requests);

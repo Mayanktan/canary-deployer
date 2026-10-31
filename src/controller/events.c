@@ -42,7 +42,7 @@ void log_event(const char *fmt, ...) {
 
     pthread_mutex_lock(&events_lock);
     snprintf(messages[next_slot], sizeof messages[next_slot], "%s", message);
-    snprintf(clock_times[next_slot], sizeof clock_times[next_slot], "%s", date + 11);  // just HH:MM:SS
+    strftime(clock_times[next_slot], sizeof clock_times[next_slot], "%H:%M:%S", &local);
     next_slot = (next_slot + 1) % MAX_EVENTS;
     if (event_count < MAX_EVENTS) event_count++;
 
