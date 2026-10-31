@@ -1,0 +1,4 @@
+bin/
+data/
+*.dSYM/
+.DS_Store

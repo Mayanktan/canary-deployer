@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: make
+
+      - name: End-to-end test
+        run: make test
+
+      # Newer Linux kernels randomize memory layout more than ThreadSanitizer supports.
+      - name: Allow ThreadSanitizer to run
+        if: runner.os == 'Linux'
+        run: sudo sysctl vm.mmap_rnd_bits=28
+
+      - name: End-to-end test with ThreadSanitizer
+        run: make tsan
